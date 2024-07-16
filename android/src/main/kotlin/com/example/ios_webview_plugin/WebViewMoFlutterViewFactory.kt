@@ -154,7 +154,7 @@ class WebViewManager private constructor(private val context: Context) {
         } else {
             loadDefaultURL()
         }
-        if (isWebViewPaused) resumeWebView()
+       resumeWebView()
     }
 
     fun evaluateJavaScript(script: String, completionHandler: (Any?, Throwable?) -> Unit) {
