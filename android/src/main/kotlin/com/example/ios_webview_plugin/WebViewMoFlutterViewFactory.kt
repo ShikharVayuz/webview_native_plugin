@@ -189,11 +189,12 @@ class WebViewManager private constructor(private val context: Context) {
     fun destroyWebView() {
         isWebViewPaused = true
         Log.d("WebViewMoFlutterPlugin", "destroyWebView")
-       
-        webView?.onPause()
-        webView?.pauseTimers()
-//        webView?.destroy()
-//        webView = null
+       // webView?.onPause()
+       // webView?.pauseTimers()
+        webView?.apply {
+            destroy()
+        }
+        webView = null
     }
 
     fun resumeWebView() {
