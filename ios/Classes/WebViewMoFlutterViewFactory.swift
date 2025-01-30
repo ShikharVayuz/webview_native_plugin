@@ -37,6 +37,7 @@ class WebViewMoFlutter: NSObject, FlutterPlatformView {
          // Initialize isChart from args
         if let argsDict = args as? [String: Any], let isChart = argsDict["isChart"] as? Bool {
             self.isChart = isChart
+            self.webView.scrollView.backgroundColor = UIColor.red
         } else {
             self.isChart = true
         }
@@ -47,10 +48,18 @@ class WebViewMoFlutter: NSObject, FlutterPlatformView {
             // self.url = URL(string: urlString)
             // loadUrl()
         }
+        
+        if let argsDict = args as? [String: Any], let backgroundColor = argsDict["backgroundColor"] as? String {
+            self.webView.scrollView.backgroundColor = UIColor(named: backgroundColor)
+            self.webView.backgroundColor = UIColor(named: backgroundColor)
+        }
+        
         self.webView.navigationDelegate = self
     }
 
     func view() -> UIView {
+        webView.isOpaque = false
+        webView.scrollView.bounces = false
         return webView
     }
 

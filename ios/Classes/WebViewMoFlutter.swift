@@ -27,8 +27,9 @@ public class WebViewMoFlutterPlugin: NSObject, FlutterPlugin, WKScriptMessageHan
                let urlString = args["initialUrl"] as? String {
                 let javaScriptChannelName = args["javaScriptChannelName"] as? String
                 let isChart = args["isChart"] as? Bool ?? true
+                let backgroundColor = args["backgroundColor"] as? String ?? "#FF0000"
                 print("Received isChart: \(isChart)")
-                WebViewManager.shared.loadURL(urlString, isChart, withJavaScriptChannel: javaScriptChannelName, plugin: self)
+                WebViewManager.shared.loadURL(urlString, isChart, withJavaScriptChannel: javaScriptChannelName, plugin: self,backgroundColor:backgroundColor)
                 result(nil)
             } else {
                 result(FlutterError(code: "INVALID_ARGUMENT", message: "URL is required", details: nil))
@@ -148,11 +149,15 @@ class WebViewManager: NSObject, WKNavigationDelegate, WKScriptMessageHandler {
         configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
         webView = WKWebView(frame: .zero, configuration: configuration)
         webView.navigationDelegate = self
+        webView.isOpaque = false
+        webView.scrollView.bounces = false
         addJavascriptChannel(name: "ChartAppDelegate")
     }
 
-    func loadURL(_ urlString: String, _ isFromChart: Bool, withJavaScriptChannel javaScriptChannelName: String?, plugin: WKScriptMessageHandler) {
+    func loadURL(_ urlString: String, _ isFromChart: Bool, withJavaScriptChannel javaScriptChannelName: String?, plugin: WKScriptMessageHandler,backgroundColor:String) {
         isChart = isFromChart
+        self.webView.scrollView.backgroundColor = UIColor(named: backgroundColor)
+        self.webView.backgroundColor = UIColor(named: backgroundColor)
         print("Received loadURL isChart: \(isChart)")
         guard let url = URL(string: urlString), isValidURL(url) else {
             delegate?.onPageLoadError()
