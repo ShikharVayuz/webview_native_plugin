@@ -13,10 +13,10 @@ class IosWebViewPlugin {
   Stream<String> get onMessageReceived => _onMessageReceivedStream!;
 
   static Future<void> openWebView(String url,
-      {String? javascriptChannelName, bool? isChart}) async {
+      {String? javascriptChannelName, bool? isChart,String? backgroundColor}) async {
     try {
       await _channel.invokeMethod('loadUrl',
-          {'initialUrl': url, 'javaScriptChannelName': javascriptChannelName, 'isChart': isChart});
+          {'initialUrl': url, 'javaScriptChannelName': javascriptChannelName, 'isChart': isChart,'backgroundColor':backgroundColor});
     } on PlatformException catch (e) {
       print("Failed to open WebView: '${e.message}'.");
     }
