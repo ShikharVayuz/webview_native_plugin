@@ -37,7 +37,7 @@ class WebViewMoFlutter: NSObject, FlutterPlatformView {
          // Initialize isChart from args
         if let argsDict = args as? [String: Any], let isChart = argsDict["isChart"] as? Bool {
             self.isChart = isChart
-            self.webView.scrollView.backgroundColor = UIColor.red
+            self.webView.scrollView.backgroundColor = UIColor.clear
         } else {
             self.isChart = true
         }

@@ -19,7 +19,7 @@ import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
-
+import android.graphics.Color
 
 class WebViewMoFlutterViewFactory(
         private val messenger: BinaryMessenger,
@@ -76,6 +76,8 @@ class WebViewManager private constructor(private val context: Context) {
                 settings.domStorageEnabled = true
                 settings.cacheMode = WebSettings.LOAD_DEFAULT
                 settings.javaScriptCanOpenWindowsAutomatically = true
+                webView?.setBackgroundColor(android.graphics.Color.TRANSPARENT)
+                Log.d("WebViewMoFlutterPlugin", "Red Color Set")
                 webChromeClient = object : WebChromeClient() {
                     override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
                         Log.d("WebViewMoFlutterPlugin", "WebViewConsole: ${consoleMessage.message()} at ${consoleMessage.sourceId()}:${consoleMessage.lineNumber()}")
